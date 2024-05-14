@@ -1,0 +1,33 @@
+name: e2etest
+on: [workflow_dispatch]
+
+jobs:
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリチェックアウト（Actionsのジョブ内でリポジトリ内のコードやファイルにアクセスするため）
+      - uses: actions/checkout@v4
+
+      # Node.jsをセットアップ（バージョンは最新のもの）
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      # アプリケーションの依存関係をインストール
+      - name: Install dependencies
+        run: npm install -g yarn && yarn
+      #playwrightインストール
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+
+      #gaugeインストール
+      - name: Install Gauge
+        run: npm install -g @getgauge/cli
+
+      #Nodeプロジェクト起動
+      - name: Start Node project
+        run: npm start &
+
+      #テスト実行
+      - name: Run e2e tests
+        run: npx playwright test main.spec.ts
