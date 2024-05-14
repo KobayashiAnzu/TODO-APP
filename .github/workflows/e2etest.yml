@@ -13,16 +13,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
       # アプリケーションの依存関係をインストール
       - name: Install dependencies
         run: npm install -g yarn && yarn
+
       #playwrightインストール
       - name: Install Playwright Browsers
         run: yarn playwright install --with-deps
-
-      #gaugeインストール
-      - name: Install Gauge
-        run: npm install -g @getgauge/cli
 
       #Nodeプロジェクト起動
       - name: Start Node project
