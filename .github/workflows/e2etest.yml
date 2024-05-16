@@ -37,3 +37,10 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 10
+
+      #スクリーンショットをアーティファクトとして保存
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot
+          path: return.png
